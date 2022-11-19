@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Verify OTP</title>
-  <link rel="stylesheet" th:href=@{normalize.min.css}>
-  <link rel="stylesheet" th:href=@{style.css}>
+    <meta charset="UTF-8">
+    <title>Verify OTP</title>
 </head>
 <body>
 <div id="form-wrap">
-  <h2>OTP Verification</h2>
-  <h4 th:text="${message}"></h4>
-  <form th:action="@{/validate-otp}" method="post" id="login-form">
-    <p>
-      <input type="text" id="otp" name="otp" placeholder="OTP" required><i class="validation"><span></span><span></span></i>
-    </p>
-    <p>
-      <input type="submit" id="login" value="Login">
-    </p>
-    <span th:text="${error}" id="error"></span>
-  </form>
+    <h2>OTP Verification</h2>
+    <h4 th:text="${message}"></h4>
+    <form id="login-form" method="post" th:action="@{/validate-otp}">
+        <p>
+            <input id="otp" name="otp" placeholder="OTP" required type="text"><i
+                class="validation"><span></span><span></span></i>
+        </p>
+        <p>
+            <input id="login" type="submit" value="Login">
+        </p>
+        <span id="error" th:text="${error}"></span>
+    </form>
 </div>
 </body>
 </html>

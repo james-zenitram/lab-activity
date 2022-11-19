@@ -1,49 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Sign Up - CodeJava</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <title>Register</title>
 </head>
 <body>
-<div class="container text-center">
-    <div>
-        <h1>User Registration - Sign Up</h1>
-    </div>
-    <form th:action="@{/process_register}" th:object="${user}"
-          method="post" style="max-width: 600px; margin: 0 auto;">
-        <div class="m-3">
-            <div class="form-group row">
-                <label class="col-4 col-form-label">E-mail: </label>
-                <div class="col-8">
-                    <input type="email" th:field="*{email}" class="form-control" required />
-                </div>
-            </div>
+<h1>User Registration - Sign Up</h1>
+<form method="post" style="max-width: 600px; margin: 0 auto;" th:action="@{/process_register}" th:object="${user}">
+    <label class="col-4 col-form-label">E-mail: </label>
+    <input class="form-control" required th:field="*{email}" type="email"/>
 
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Password: </label>
-                <div class="col-8">
-                    <input type="password" th:field="*{password}" class="form-control"
-                           required minlength="6" maxlength="10"/>
-                </div>
-            </div>
+    <label class="col-4 col-form-label">Password: </label>
+    <input class="form-control" maxlength="10" minlength="6" required th:field="*{password}" type="password"/>
 
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Full Name: </label>
-                <div class="col-8">
-                    <input type="text" th:field="*{fullName}" class="form-control"
-                           required minlength="2" maxlength="20"/>
-                </div>
-            </div>
+    <label class="col-4 col-form-label">Full Name: </label>
+    <input class="form-control" maxlength="20" minlength="2" required th:field="*{fullName}" type="text"/>
 
 
-            <div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
-            </div>
-        </div>
-    </form>
-</div>
+    <button class="btn btn-primary" type="submit">Sign Up</button>
+</form>
 </body>
 </html>
