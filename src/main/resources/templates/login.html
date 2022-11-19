@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <link rel="stylesheet" th:href=@{normalize.min.css}>
+        <link rel="stylesheet" th:href=@{style.css}>
+    </head>
+    <body>
+        <div id="form-wrap">
+            <h2>Login</h2>
+            <form th:action="@{/validate}" method="post" id="login-form">
+                <p>
+                    <input type="email" id="email" name="email" placeholder="Email" required><i class="validation"><span></span><span></span></i>
+                </p>
+                <p>
+                    <input type="password" id="password" name="password" placeholder="Password" required><i class="validation"><span></span><span></span></i>
+                </p>
+                <p>
+                    <input type="submit" id="login" value="Login">
+                </p>
+                <span th:text="${error}" id="error"></span>
+            </form>
+            <div id="create-account-wrap">
+                        <p>Not yet Registered? <a th:href="@{/register}">Click here</a><p>
+            </div>
+        </div>
+    </body>
+</html>
