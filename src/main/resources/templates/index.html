@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <meta charset="UTF-8">
         <title>Welcome</title>
     </head>
     <body>
-            <h1>Welcome</h1>
+            Welcome <b><span sec:authentication="name">Username</span></b>
+            <i><span sec:authentication="authorities">Roles</span></i>
             <h3><a th:href="@{/dashboard}">Dashboard</a></h3>
-            <h3><a th:href="@{/register}">Register</a></h3>
             <h3><a th:href="@{/logout}">Logout</a></h3>
     </body>
 </html>

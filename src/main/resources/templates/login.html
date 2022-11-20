@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-<h2>Login</h2>
-<form method="post" th:action="@{/validate}">
-    <p>
-        <input name="email" placeholder="Email" required type="email"><i
-            class="validation"><span></span><span></span></i>
-    </p>
-    <p>
-        <input name="password" placeholder="Password" required type="password"><i
-            class="validation"><span></span><span></span></i>
-    </p>
-    <p>
-        <input type="submit" value="Login">
-    </p>
-    <span th:text="${error}"></span>
-</form>
-<p>
-    Not yet Registered? <a th:href="@{/register}">Click here</a>
-</p>
+<head th:insert="fragments/fragment_login.html :: headerfiles(title='Login')"></head>
+
+<body th:replace="fragments/fragment_login.html :: body(
+    action='login',
+    message='Sign into your account',
+    name='',
+    nametype='hidden',
+    email='Email Address',
+    emailtype='email',
+    password='Password',
+    passwordtype='password',
+    cpassword='',
+    cpasswordtype='hidden',
+    otp='',
+    otptype='hidden',
+    linkvisible='d-block',
+    question='Do not have an account?',
+    link='/register')">
 </body>
+
+
+
+
+
+
+<!--<body>-->
+<!--<h2>Login</h2>-->
+<!--<form method="post" th:action="@{/login}">-->
+<!--    <div th:if="${error != null}" class="alert alert-danger" th:utext="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error</div>-->
+<!--    <p>-->
+<!--        <input name="username" placeholder="Email" required type="email"><i-->
+<!--            class="validation"><span></span><span></span></i>-->
+<!--    </p>-->
+<!--    <p>-->
+<!--        <input name="password" placeholder="Password" required type="password"><i-->
+<!--            class="validation"><span></span><span></span></i>-->
+<!--    </p>-->
+<!--    <p>-->
+<!--        <input type="submit" value="Login">-->
+<!--    </p>-->
+<!--</form>-->
+<!--<p>-->
+<!--    Not yet Registered? <a th:href="@{/register}">Click here</a>-->
+<!--</p>-->
+<!--</body>-->
 </html>

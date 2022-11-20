@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Verify OTP</title>
-</head>
-<body>
-<div id="form-wrap">
-    <h2>OTP Verification</h2>
-    <h4 th:text="${message}"></h4>
-    <form id="login-form" method="post" th:action="@{/validate-otp}">
-        <p>
-            <input id="otp" name="otp" placeholder="OTP" required type="text"><i
-                class="validation"><span></span><span></span></i>
-        </p>
-        <p>
-            <input id="login" type="submit" value="Login">
-        </p>
-        <span id="error" th:text="${error}"></span>
-    </form>
-</div>
+<head th:insert="fragments/fragment_login.html :: headerfiles(title='Login')"></head>
+
+<body th:replace="fragments/fragment_login.html :: body(
+    action='validate-otp',
+    message='Verify your account',
+    name='',
+    nametype='hidden',
+    email='',
+    emailtype='hidden',
+    password='',
+    passwordtype='hidden',
+    cpassword='',
+    cpasswordtype='hidden',
+    otp='One Time Password',
+    otptype='number',
+    linkvisible='d-none',
+    question='',
+    link='')">
 </body>
 </html>

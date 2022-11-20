@@ -29,14 +29,14 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role")
     private Role role;
 
     @Column(name = "otp_enabled", nullable = false)
     private Boolean otpEnabled;
 
-    @Column(name = "otp", length = 6)
+    @Column(name = "otp", length = 60)
     private String otp;
 
     @Column(name = "otp_requested_time")

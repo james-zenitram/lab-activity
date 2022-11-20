@@ -3,45 +3,70 @@ package com.example.labactivity.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
 @Configuration
 public class SecurityConfiguration {
 
-    @Autowired
-    private DataSource dataSource;
-
-    @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("SELECT email,password, enabled FROM users WHERE email =?")
-                .authoritiesByUsernameQuery("SELECT users.email, roles.name FROM users LEFT JOIN roles ON users.role = roles.role_id WHERE email=?");
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+        return new LoginSuccessHandler();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests()
-                .antMatchers("/").authenticated()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+        httpSecurity
+            .authorizeRequests()
+                .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .antMatchers("/register", "/register_success").permitAll()
+                .antMatchers("/").hasAnyRole("PRESIDENT", "PROFESSOR", "STUDENT")
+                .antMatchers("/otp").hasRole("PRE_OTP")
+                .antMatchers("/president/**", "/president_files/**").hasRole("PRESIDENT")
+                .antMatchers("/professor/**", "/professor_files/**").hasRole("PROFESSOR")
+                .antMatchers("/student/**", "/student/**").hasRole("STUDENT")
                 .and()
-                .formLogin().permitAll()
+            .formLogin()
+                .loginPage("/login")
+                .usernameParameter("email")
+                .successHandler(authenticationSuccessHandler())
+                .permitAll()
                 .and()
-                .logout().permitAll()
+            .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login").deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
                 .and()
-                .exceptionHandling().accessDeniedPage("/403");
+            .exceptionHandling()
+                .accessDeniedPage("/403");
+        httpSecurity.authenticationProvider(authenticationProvider());
         return httpSecurity.build();
     }
 

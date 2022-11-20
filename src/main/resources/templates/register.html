@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="fragments/fragment_login.html :: headerfiles(title='Register')"></head>
+
+<body th:replace="fragments/fragment_login.html :: body (
+    action='process_register',
+    message='Create an account',
+    name='Name',
+    nametype='text',
+    email='Email Address',
+    emailtype='email',
+    password='Password',
+    passwordtype='password',
+    cpassword='Confirm Password',
+    cpasswordtype='password',
+    otp='',
+    otptype='hidden',
+    linkvisible='d-block',
+    question='Have an account?',
+    link='/login')">
+</body>
+</html>
