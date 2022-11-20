@@ -28,9 +28,7 @@ public class UserController {
 
     @GetMapping("/")
     public String viewHomePage() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.getAuthorities());
-        return "index";
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/login")
@@ -65,14 +63,19 @@ public class UserController {
     }
 
     @GetMapping("/dashboard")
-    public String president (HttpServletRequest request) {
+    public String president (Model model, HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getAuthorities());
+        String name = userRepo.findUserByEmail(auth.getName()).getFullName();
+        model.addAttribute("name", name);
+
         if (request.isUserInRole("ROLE_PRESIDENT"))
             return "president";
         else if (request.isUserInRole("ROLE_PROFESSOR"))
             return "professor";
         else if (request.isUserInRole("ROLE_STUDENT"))
             return "student";
-        return "redirect:/";
+        return "redirect:/login";
     }
 
 

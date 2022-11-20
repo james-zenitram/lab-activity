@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head th:fragment="headerfiles (title)">
     <title th:text="${title}"></title>
@@ -65,7 +65,7 @@
                                         </div>
 
                                         <div class="d-grid gap-2">
-                                            <button class="btn btn-dark btn-primary btn-lg" type="submit">Submit</button>
+                                            <button class="btn btn-lg" type="submit" style="color: #fff; background-color: #fbc02d; border-color: #fbc02d;">Submit</button>
                                             <div th:class="${linkvisible}">
                                                 <span th:text="${question}"></span>
                                                 <a th:href="${link}" style="color: blue;">Click here</a></p>
