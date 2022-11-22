@@ -71,8 +71,8 @@ public class UserController {
 
         if (request.isUserInRole("ROLE_PRESIDENT"))
             return "president";
-        else if (request.isUserInRole("ROLE_PROFESSOR"))
-            return "professor";
+        else if (request.isUserInRole("ROLE_DEAN"))
+            return "dean";
         else if (request.isUserInRole("ROLE_STUDENT"))
             return "student";
         return "redirect:/login";

@@ -3,13 +3,13 @@ Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,Bli
 Chart.defaults.global.defaultFontColor = '#858796';
 
 // Pie Chart Example
-var ctx = document.getElementById("myPieChart");
+var ctx = document.getElementById("myPieChart2");
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["Manila Residents", "Within NCR", "Outside NCR"],
+    labels: ["Regulars", "Irregulars", "Shifters"],
     datasets: [{
-      data: [55, 30, 15],
+      data: [453, 165, 18],
       backgroundColor: ['#fbc02d', '#1cc88a', '#36b9cc'],
       hoverBackgroundColor: ['#fbc02d', '#17a673', '#2c9faf'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",

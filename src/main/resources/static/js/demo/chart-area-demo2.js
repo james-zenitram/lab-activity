@@ -28,13 +28,13 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-var myLineChart = new Chart(ctx, {
+var ctx = document.getElementById("myAreaChart2");
+var myLineChart2 = new Chart(ctx, {
   type: 'line',
   data: {
     labels: ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028"],
     datasets: [{
-      label: "Students",
+      label: "Rate",
       lineTension: 0.3,
       backgroundColor: "rgba(78, 115, 223, 0.05)",
       borderColor: "rgba(78, 115, 223, 1)",
@@ -46,7 +46,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [3656, 4152, 6636, 6812, 7002, 7250, 7142, 7100, 8523, 9004, 9236, 9111],
+      data: [97, 95, 87, 89, 90, 98, 99, 85, 96, 99, 96, 97],
     }],
   },
   options: {
@@ -74,7 +74,8 @@ var myLineChart = new Chart(ctx, {
       }],
       yAxes: [{
         ticks: {
-          maxTicksLimit: 5,
+          suggestedMin: 0,
+          maxTicksLimit: 12,
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {

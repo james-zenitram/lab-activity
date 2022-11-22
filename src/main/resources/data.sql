@@ -5,7 +5,7 @@
 
 -- Roles
 INSERT INTO `roles` (`name`) VALUES ('ROLE_PRESIDENT');
-INSERT INTO `roles` (`name`) VALUES ('ROLE_PROFESSOR');
+INSERT INTO `roles` (`name`) VALUES ('ROLE_DEAN');
 INSERT INTO `roles` (`name`) VALUES ('ROLE_STUDENT');
 
 -- President, password = patrick
@@ -18,6 +18,6 @@ INSERT INTO `users` (`email`, `full_name`, `password`, `enabled`, `role`, `otp_e
 
 -- Student
 INSERT INTO `users` (`email`, `full_name`, `password`, `enabled`, `role`, `otp_enabled`, `otp`, `otp_requested_time`)
-    VALUES ('alex@gmail.com', 'Alex', '$2a$10$.tP2OH3dEG0zms7vek4ated5AiQ.EGkncii0OpCcGq4bckS9NOULu', '1', '2', '0', NULL, NULL);
+    VALUES ('alex@gmail.com', 'Alex', '$2a$10$.tP2OH3dEG0zms7vek4ated5AiQ.EGkncii0OpCcGq4bckS9NOULu', '1', '3', '0', NULL, NULL);
 
 
