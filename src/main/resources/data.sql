@@ -10,7 +10,7 @@ INSERT INTO `roles` (`name`) VALUES ('ROLE_STUDENT');
 
 -- President, password = patrick
 INSERT INTO `users` (`email`, `full_name`, `password`, `enabled`, `role`, `otp_enabled`, `otp`, `otp_requested_time`)
-    VALUES ('martinezjames009@gmail.com', 'James', '$2a$10$IqTJTjn39IU5.7sSCDQxzu3xug6z/LPU6IF0azE/8CkHCwYEnwBX.', '1', '1', '0', NULL, NULL);
+    VALUES ('martinezjames009@gmail.com', 'James', '$2a$10$IqTJTjn39IU5.7sSCDQxzu3xug6z/LPU6IF0azE/8CkHCwYEnwBX.', '1', '1', '1', NULL, NULL);
 
 -- Professor
 INSERT INTO `users` (`email`, `full_name`, `password`, `enabled`, `role`, `otp_enabled`, `otp`, `otp_requested_time`)

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragment_login.html :: headerfiles(title='Login')"></head>
+
+<body th:insert="fragments/fragment_login.html :: body(
+    plmcover='/images/plm_cover.jpg',
+    action='validate-email',
+    message='Verify your account',
+    name='',
+    nametype='hidden',
+    email='',
+    emailtype='hidden',
+    password='',
+    passwordtype='hidden',
+    cpassword='',
+    cpasswordtype='hidden',
+    showpasstype='hidden',
+    otp='One Time Password',
+    otptype='number',
+    linkvisible='d-none',
+    question='',
+    link='')">
+</body>
+</html>

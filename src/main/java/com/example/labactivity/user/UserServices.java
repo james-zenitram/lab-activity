@@ -20,6 +20,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Transactional
@@ -31,16 +33,12 @@ public class UserServices {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public void generateOneTimePassword(User user)
+    public String  generateOneTimePassword(User user)
             throws UnsupportedEncodingException, MessagingException {
         String OTP = RandomStringUtils.randomNumeric(6);
         String encodedOTP = passwordEncoder.encode(OTP);
-
-        user.setOtp(encodedOTP);
-        user.setOtpRequestedTime(new Date());
-
-        userRepo.save(user);
         sendOTPEmail(user, OTP);
+        return  encodedOTP;
     }
 
     private void sendOTPEmail(User user, String OTP) throws MessagingException, UnsupportedEncodingException {
@@ -50,7 +48,7 @@ public class UserServices {
         helper.setFrom("contact@plm.com", "PLM SYSTEM");
         helper.setTo(user.getEmail());
 
-        String subject = "Here's your One Time Password (OTP) - Expire in 5 minutes!";
+        String subject = "Here's your One Time Password (OTP) ";
 
         String content = "<p>Hello " + user.getFullName() + "</p>"
                 + "<p>For security reason, you're required to use the following "
@@ -64,20 +62,6 @@ public class UserServices {
         mailSender.send(message);
     }
 
-    public boolean verifyOTP(String otp) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepo.findUserByEmail(auth.getName());
-        boolean verified = BCrypt.checkpw(otp, user.getOtp());
-        if (verified) {
-            user.setOtp(null);
-            userRepo.save(user);
-            clearOTP(user);
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 
     public void grantUserRole() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -88,6 +72,8 @@ public class UserServices {
         Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), role);
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(newAuth);
+
+        clearOTP(user);
     }
 
     public void clearOTP(User user) {
@@ -96,5 +82,12 @@ public class UserServices {
         userRepo.save(user);
     }
 
+    public boolean passwordStrengthValidate(String password) {
+        String PASSWORD_PATTERN =
+                "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
+        Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
 
 }

@@ -2,21 +2,58 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments/fragment_login.html :: headerfiles(title='Login')"></head>
 
-<body th:replace="fragments/fragment_login.html :: body(
-    action='validate-otp',
-    message='Verify your account',
-    name='',
-    nametype='hidden',
-    email='',
-    emailtype='hidden',
-    password='',
-    passwordtype='hidden',
-    cpassword='',
-    cpasswordtype='hidden',
-    otp='One Time Password',
-    otptype='number',
-    linkvisible='d-none',
-    question='',
-    link='')">
+
+<body>
+<section class="vh-100" style="background-color: whitesmoke;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+                <div class="shadow card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-md-6 col-lg-5 d-none d-md-block">
+                            <img th:src="@{/images/plm_cover.jpg}"
+                                 alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                        </div>
+                        <div class="col-md-6 col-lg-7 d-flex align-top">
+                            <div class="card-body p-4 p-lg-5 text-blue">
+                                <form method="post" th:action="@{/validate-otp?method={method}&code={code}(method=${method}, code=${code})}" th:object="${user}"
+                                      oninput='confirmpassword.setCustomValidity(confirmpassword.value != password.value ? "Passwords do not match." : "")'>
+                                    <div class="d-flex align-items-center mb-3 pb-1 gap-2" >
+                                        <img th:src="@{/images/plm_logo.png}" alt="logo" class="img-fluid" width="40" height="40"/>
+                                        <span class="h3 fw-bold mb-1">PLM PORTAL</span>
+                                    </div>
+
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;" th:text="${message}"></h5>
+
+                                    <div th:if="${error} == true" class="alert alert-danger">
+                                       <span>Invalid OTP<br></span>
+                                    </div>
+
+                                    <div class="d-grid gap-3">
+                                        <div class="d-grid gap-4">
+                                            <input name="name" th:field="*{fullName}" type="hidden" id="name" class="form-control form-control-lg" placeholder="Name" required/>
+                                            <input name="email" th:field="*{email}" type="hidden" id="email" class="form-control form-control-lg" placeholder="Email" required/>
+                                            <input name="password" th:field="*{password}" type="hidden" id="password" class="form-control form-control-lg" placeholder="Password" required/>
+
+                                            <input name="otp" th:field="*{otp}" th:type="${otptype}" id="otp" class="form-control form-control-lg" placeholder="6 Digit OTP" required/>
+                                        </div>
+
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-lg" type="submit" style="color: #fff; background-color: #fbc02d; border-color: #fbc02d;">Submit</button>
+                                        </div>
+                                    </div>
+                                    <!--                                    <a class="small text-muted" href="#!">Forgot password?</a>-->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
 </body>
 </html>

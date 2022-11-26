@@ -3,21 +3,70 @@
 
 <head th:insert="fragments/fragment_login.html :: headerfiles(title='Register')"></head>
 
-<body th:replace="fragments/fragment_login.html :: body (
-    action='process_register',
-    message='Create an account',
-    name='Name',
-    nametype='text',
-    email='Email Address',
-    emailtype='email',
-    password='Password',
-    passwordtype='password',
-    cpassword='Confirm Password',
-    cpasswordtype='password',
-    otp='',
-    otptype='hidden',
-    linkvisible='d-block',
-    question='Have an account?',
-    link='/login')">
+<body th:fragment="body (plmcover, action, message, name, nametype, email, emailtype, password, passwordtype, cpassword, cpasswordtype, showpasstype, otp, otptype, linkvisible, question, link)">
+<section class="vh-100" style="background-color: whitesmoke;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+                <div class="shadow card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-md-6 col-lg-5 d-none d-md-block">
+                            <img th:src="@{/images/plm_cover2.jpg}"
+                                 alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                        </div>
+                        <div class="col-md-6 col-lg-7 d-flex align-top">
+                            <div class="card-body p-4 p-lg-5 text-blue">
+                                <form method="post" th:action="@{/process_register}" th:object="${user}"
+                                      oninput='confirmpassword.setCustomValidity(confirmpassword.value != password.value ? "Passwords do not match." : "")'>
+                                    <div class="d-flex align-items-center mb-3 pb-1 gap-2" >
+                                        <img th:src="@{/images/plm_logo.png}" alt="logo" class="img-fluid" width="40" height="40"/>
+                                        <span class="h3 fw-bold mb-1">PLM PORTAL</span>
+                                    </div>
+
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Create an account</h5>
+
+                                    <div th:if="${#strings.toString(param.error)} == 'true'" class="alert alert-danger">
+                                        <span th:if="${#strings.toString(param.name)} == 'true'">Name Already Registered.<br></span>
+                                        <span th:if="${#strings.toString(param.email)} == 'true'">Email Already Registered.<br></span>
+                                        <span th:if="${#strings.toString(param.password)} == 'true'">Password is weak. Read Password Note.<br></span>
+                                    </div>
+
+                                    <div th:if="${#strings.toString(param.success)} == 'emailverified'" class="alert alert-success">Email Verification Success</div>
+
+
+                                    <div class="d-grid gap-3">
+                                        <div class="d-grid gap-4">
+                                            <input name="name" th:field="*{fullName}" type="text" id="name" class="form-control form-control-lg" placeholder="Name" required/>
+                                            <input name="email" th:field="*{email}" type="email" id="email" class="form-control form-control-lg" placeholder="Email" required/>
+                                            <input name="password" th:field="*{password}" type="password" id="password" class="form-control form-control-lg" placeholder="Password" required/>
+                                            <input name="confirmpassword"  type="password" id="confirmpassword" class="form-control form-control-lg" placeholder="Confirm Password" required/>
+                                            <span>Note: password must be 8-20 characters long, must contain special characters "!@#$%&*_?", numbers, lower and upper letters only.</span>
+
+                                        </div>
+
+                                        <div class="d-grid gap-2 ">
+                                            <button class="btn btn-lg" type="submit" style="color: #fff; background-color: #fbc02d; border-color: #fbc02d;">Submit</button>
+                                            <div class="d-block">
+                                                <a class="small text-muted" href="/login">Have an account?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--                                    <a class="small text-muted" href="#!">Forgot password?</a>-->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
 </body>
+
+
+
 </html>
